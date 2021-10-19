@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form"; //Simple form validation with React H
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
 import s from "@assets/style/estilos";
+//import db from "../../../database/firebase";
 
 const Login = (props) => {
   const [state, setState] = useState({

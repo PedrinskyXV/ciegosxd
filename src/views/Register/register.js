@@ -16,10 +16,15 @@ import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
 import s from "@assets/style/estilos";
 
+import Firebase from '../../../database/firebase';
+const auth = Firebase.auth();
+
+
 const Register = (props) => {
   
   const [state, setState] = useState({
     esCorrecto: false,
+    msj: "",
   });
 
   const handleChangeText = (name, value) => {
@@ -37,7 +42,15 @@ const Register = (props) => {
     mode: "onChange",
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      console.log(data);
+      await auth.createUserWithEmailAndPassword(data.email, data.clave);
+    } catch (error) {
+      setState({esCorrecto: true, msj: error})
+      console.log(error)
+    }
+  }
 
   return (
     <ScrollView style={s.container}>
@@ -151,7 +164,7 @@ const Register = (props) => {
         <Button
           icon="open-in-new"
           mode="contained"
-          onPress={() => setState({ esCorrecto : true}) /*handleSubmit(onSubmit)*/}
+          onPress={handleSubmit(onSubmit)}
           style={s.btnLogin}
         >
           Registrarse
