@@ -4,20 +4,19 @@ import { View, Text, ScrollView, Image } from "react-native";
 import {
   TextInput,
   Button,
-  Checkbox,
   HelperText,
-  Paragraph,
-  Dialog,
-  Portal,
-  Provider,
 } from "react-native-paper"; //Material UI
 import { useForm } from "react-hook-form"; //Simple form validation with React Hook Form.
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
 import s from "@assets/style/estilos";
 
-import Firebase from '../../../database/firebase';
+import Firebase from '@database/firebase';
+
+import {} from "firebase/firestore";
+
 const auth = Firebase.auth();
+const db = Firebase.firestore();
 
 
 const Register = (props) => {
@@ -31,6 +30,25 @@ const Register = (props) => {
     setState({ ...state, [name]: value });
   };
 
+  const savePhrase =  () => {
+    db.collection("cities").doc("SV").set({
+      name: "Los Angeles",
+      state: "CA",
+      country: "USA"
+  })
+  .then(() => {
+      console.log("Document successfully written!");
+  })
+  .catch((error) => {
+      console.error("Error writing document: ", error);
+  });
+    try {
+       
+    console.log("palabra agregada")
+    } catch (error) {
+      console.log(error);
+    }
+}
   
 
   const { control, setFocus, handleSubmit } = useForm({
@@ -164,7 +182,7 @@ const Register = (props) => {
         <Button
           icon="open-in-new"
           mode="contained"
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(savePhrase)}
           style={s.btnLogin}
         >
           Registrarse
