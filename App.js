@@ -8,6 +8,7 @@ import Register from "./src/views/Register/register";
 import Index from "./src/views/Index/index";
 import Home from "./src/views/Home/home";
 import Settings from "./src/views/Settings/settings";
+import Phrases from "./src/views/Send/phrases";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,10 +16,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
+        {/*<Stack.Screen
           name="Login"
           component={Login}
           options={{
+            headerShown: false,
             title: "Bienvenido a EduBraille",
             headerStyle: { backgroundColor: "#e84444",  },
             headerTintColor: '#fff',
@@ -28,8 +30,9 @@ export default function App() {
             }
           }}
         />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Bienvenido" component={Index} />
+        <Stack.Screen name="Register" component={Register} />*/}
+        <Stack.Screen name="Phrases" component={Phrases} />
+        <Stack.Screen name="Bienvenido" options={{headerShown: false}} component={Index} />
         <Stack.Screen name="Inicio" component={Home} />
         <Stack.Screen name="Settings" component={Settings} />
       </Stack.Navigator>
