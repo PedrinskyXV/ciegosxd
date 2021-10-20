@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form"; //Simple form validation with React H
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
 import s from "@assets/style/estilos";
-//import db from "../../../database/firebase";
+
+import Firebase from "@database/firebase";
+import {} from "firebase/firestore";
+const auth = Firebase.auth();
 
 const Login = (props) => {
   const [state, setState] = useState({
-    usuario: "",
+    email: "",
     clave: "",
   });
 
@@ -20,13 +23,21 @@ const Login = (props) => {
 
   const { control, setFocus, handleSubmit } = useForm({
     defaultValues: {
-      usuario: "",
+      email: "",
       clave: "",
     },
     mode: "onChange",
   });
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await auth.signInWithEmailAndPassword(data.email, data.clave);
+      props.navigation.navigate("Bienvenido");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScrollView style={s.container}>
       <View style={s.logoContainer}>
@@ -47,16 +58,16 @@ const Login = (props) => {
         formConfigArray={[
           {
             type: "text",
-            name: "usuario",
+            name: "email",
             textInputProps: {
               mode: "outlined",
-              label: "Usuario",
-              left: <TextInput.Icon name={"account-circle"} />,
+              label: "Email",
+              left: <TextInput.Icon name={"email"} />,
             },
             rules: {
               required: {
                 value: true,
-                message: "Usuario es requerido.",
+                message: "Email es requerido.",
               },
             },
           },
@@ -101,9 +112,7 @@ const Login = (props) => {
         </Button>
       </View>
 
-      <Text>
-        {"\n"}        
-      </Text>
+      <Text>{"\n"}</Text>
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
@@ -113,21 +122,20 @@ const Login = (props) => {
         <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
       </View>
 
-      <Text>
-        {"\n"}        
-      </Text>
+      <Text>{"\n"}</Text>
 
       <View>
         <Button
           icon="open-in-new"
           mode="contained"
-          onPress={() => {props.navigation.navigate('Register')}}
+          onPress={() => {
+            props.navigation.navigate("Register");
+          }}
           style={s.btnLogin}
         >
           Registrarse
         </Button>
       </View>
-
     </ScrollView>
   );
 };

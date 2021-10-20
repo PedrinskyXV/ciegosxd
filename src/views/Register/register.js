@@ -1,26 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
-import {
-  TextInput,
-  Button,
-  HelperText,
-} from "react-native-paper"; //Material UI
+import { TextInput, Button, HelperText } from "react-native-paper"; //Material UI
 import { useForm } from "react-hook-form"; //Simple form validation with React Hook Form.
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
 import s from "@assets/style/estilos";
 
-import Firebase from '@database/firebase';
+import Firebase from "@database/firebase";
 
 import {} from "firebase/firestore";
 
 const auth = Firebase.auth();
 const db = Firebase.firestore();
 
-
 const Register = (props) => {
-  
   const [state, setState] = useState({
     esCorrecto: false,
     msj: "",
@@ -30,26 +24,20 @@ const Register = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const savePhrase =  () => {
-    db.collection("cities").doc("SV").set({
-      name: "Los Angeles",
-      state: "CA",
-      country: "USA"
-  })
-  .then(() => {
-      console.log("Document successfully written!");
-  })
-  .catch((error) => {
-      console.error("Error writing document: ", error);
-  });
-    try {
-       
-    console.log("palabra agregada")
-    } catch (error) {
-      console.log(error);
-    }
-}
-  
+  const saveUser = async (data) => {
+    console.log(data);
+    await db.collection("users")      
+      .add({
+        email: data.email,
+        usuario: data.usuario
+      })
+      .then(() => {
+        console.log("Usuario guardado correctamente.");
+      })
+      .catch((error) => {
+        console.error("Error al guardar usuario: ", error);
+      });
+  };
 
   const { control, setFocus, handleSubmit } = useForm({
     defaultValues: {
@@ -64,11 +52,12 @@ const Register = (props) => {
     try {
       console.log(data);
       await auth.createUserWithEmailAndPassword(data.email, data.clave);
+      saveUser(data);
     } catch (error) {
-      setState({esCorrecto: true, msj: error})
-      console.log(error)
+      setState({ esCorrecto: true, msj: error });
+      console.log(error);
     }
-  }
+  };
 
   return (
     <ScrollView style={s.container}>
@@ -182,14 +171,14 @@ const Register = (props) => {
         <Button
           icon="open-in-new"
           mode="contained"
-          onPress={handleSubmit(savePhrase)}
+          onPress={handleSubmit(onSubmit)}
           style={s.btnLogin}
         >
           Registrarse
         </Button>
       </View>
 
-      <Text>{"\n"}</Text>      
+      <Text>{"\n"}</Text>
     </ScrollView>
   );
 };
