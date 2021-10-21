@@ -17,10 +17,6 @@ const Login = (props) => {
     clave: "",
   });
 
-  const handleChangeText = (name, value) => {
-    setState({ ...state, [name]: value });
-  };
-
   const { control, setFocus, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -32,7 +28,6 @@ const Login = (props) => {
   const onSubmit = async (data) => {
     try {
       await auth.signInWithEmailAndPassword(data.email, data.clave);
-      props.navigation.navigate("Bienvenido");
     } catch (error) {
       console.log(error);
     }
@@ -129,7 +124,7 @@ const Login = (props) => {
           icon="open-in-new"
           mode="contained"
           onPress={() => {
-            props.navigation.navigate("Register");
+            props.navigation.navigate("Signup");
           }}
           style={s.btnLogin}
         >

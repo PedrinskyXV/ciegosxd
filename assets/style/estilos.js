@@ -18,6 +18,7 @@ export default StyleSheet.create({
   btnLogin: {
     height: 50,
     backgroundColor: colorPrin,
+    color: "#f8f8ff",
     alignContent: 'center',
     justifyContent: 'center',
   },
@@ -29,4 +30,8 @@ export default StyleSheet.create({
   logoContainer: {
     padding: 25,
   },
+  navbar: {
+    backgroundColor: colorPrin,
+    color: '#f8f8ff'
+  }
 });

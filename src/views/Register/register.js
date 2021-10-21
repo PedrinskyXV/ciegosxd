@@ -26,9 +26,10 @@ const Register = (props) => {
 
   const saveUser = async (data) => {
     console.log(data);
-    await db.collection("users")      
-      .add({
-        email: data.email,
+    await db.collection("users")
+    .doc(data.email)      
+      .set({
+        nivel: '',
         usuario: data.usuario
       })
       .then(() => {
