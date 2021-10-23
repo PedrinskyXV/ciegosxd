@@ -33,5 +33,15 @@ export default StyleSheet.create({
   navbar: {
     backgroundColor: colorPrin,
     color: '#f8f8ff'
-  }
+  },
+  bannerAlert: {
+    backgroundColor: "#f4a39f",
+    height: 32,    
+  },
+  bannerMsj: {
+    color: "#3e3939",
+    fontSize: 14,
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
 });

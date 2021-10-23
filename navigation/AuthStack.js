@@ -23,7 +23,19 @@ export default function AuthStack() {
           },
         }}
       />
-      <Stack.Screen name="Signup" component={Register} />
+      <Stack.Screen
+        name="Signup"
+        component={Register}
+        options={{
+          title: "Registrate en EduBraille",
+          headerStyle: { backgroundColor: "#e84444" },
+          headerTintColor: "#f8f8ff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+            fontFamily: "sans-serif",
+          },
+        }}
+      />
     </Stack.Navigator>
   );
 }

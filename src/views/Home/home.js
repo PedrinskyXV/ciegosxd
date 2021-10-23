@@ -38,7 +38,7 @@ export default function Home({ navigation, route }) {
       
       <Appbar.Header style={s.navbar}>
       
-      <Appbar.Content title="Bienvenido" subtitle={user.email} />
+      <Appbar.Content title="Bienvenido" subtitle={user.User.email} />
       <Appbar.Action icon="logout" onPress={handleSignOut} />
       <Appbar.Action icon="dots-vertical" onPress={handleSignOut} />
     </Appbar.Header>

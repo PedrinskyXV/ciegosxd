@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
-import { TextInput, Button, HelperText } from "react-native-paper"; //Material UI
+import { TextInput, Button, Banner, Chip } from "react-native-paper"; //Material UI
 import { useForm } from "react-hook-form"; //Simple form validation with React Hook Form.
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
@@ -14,23 +14,20 @@ import {} from "firebase/firestore";
 const auth = Firebase.auth();
 const db = Firebase.firestore();
 
-const Register = (props) => {
+const Register = () => {
   const [state, setState] = useState({
     esCorrecto: false,
-    msj: "",
+    Mensaje: "",
   });
-
-  const handleChangeText = (name, value) => {
-    setState({ ...state, [name]: value });
-  };
 
   const saveUser = async (data) => {
     console.log(data);
-    await db.collection("users")
-    .doc(data.email)      
+    await db
+      .collection("users")
+      .doc(data.email)
       .set({
-        nivel: '',
-        usuario: data.usuario
+        nivel: "",
+        usuario: data.usuario,
       })
       .then(() => {
         console.log("Usuario guardado correctamente.");
@@ -50,13 +47,32 @@ const Register = (props) => {
   });
 
   const onSubmit = async (data) => {
-    try {
-      console.log(data);
-      await auth.createUserWithEmailAndPassword(data.email, data.clave);
-      saveUser(data);
-    } catch (error) {
-      setState({ esCorrecto: true, msj: error });
-      console.log(error);
+    console.log(data);
+    if (data.clave !== data.clave2) {
+      setState({ esCorrecto: true, Mensaje: "Las contraseñas no coinciden." });
+    } else {
+      try {
+        await auth.createUserWithEmailAndPassword(data.email, data.clave);
+        saveUser(data);
+      } catch (error) {
+        switch (error.code) {
+          case "auth/email-already-in-use":
+            setState({
+              esCorrecto: true,
+              Mensaje: "El email ya se encuentra registrado.",
+            });
+            break;
+          default:
+            setState({
+              esCorrecto: true,
+              Mensaje:
+                "Ocurrio un error al registrarse.",
+            });
+            break;
+        }
+
+        console.log(error.code);
+      }
     }
   };
 
@@ -159,9 +175,15 @@ const Register = (props) => {
         ]}
       />
 
-      <HelperText type="error" visible={state.esCorrecto}>
-        Las contraseñas no coinciden.
-      </HelperText>
+      <Text>        
+        {"\n"}
+      </Text>
+
+      {state.esCorrecto ? (
+        <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>
+          {state.Mensaje}
+        </Chip>
+      ) : null}
 
       <Text>
         {"\n"}
