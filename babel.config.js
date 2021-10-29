@@ -11,7 +11,8 @@ module.exports = function(api) {
             "@images": "./assets/images",
             "@database": "./database",
             "@views": "./src/views",
-            "@navigation": "./navigation"
+            "@navigation": "./navigation",
+            "@fonts": "./assets/fonts"
           }          
         }
       ]

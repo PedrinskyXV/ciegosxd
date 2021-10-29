@@ -2,15 +2,13 @@ import React, { useContext } from "react";
 
 import {
   StyleSheet,
-  Text,
   View,
   ScrollView,
-  ToastAndroid,
   TouchableOpacity,
   Image,
 } from "react-native";
 
-import { Appbar, Title } from 'react-native-paper';
+import { Appbar, Avatar, Text } from "react-native-paper";
 import s from "@assets/style/estilos";
 
 import Firebase from "@database/firebase";
@@ -18,8 +16,7 @@ import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider"
 
 const auth = Firebase.auth();
 
-export default function Home({ navigation, route }) {
-  //const {nivel} = route.params;
+export default function Home({ navigation }) {
   const handleSignOut = async () => {
     try {
       await auth.signOut();
@@ -27,21 +24,23 @@ export default function Home({ navigation, route }) {
       console.log(error);
     }
   };
+
   const { user } = useContext(AuthenticatedUserContext);
-  const showToast = () => {
-    ToastAndroid.show("nivel", ToastAndroid.SHORT);
-  };
+
   return (
-    
-    <ScrollView>
-      {/* <Button title="Toggle Toast" onPress={() => showToast()} /> */}
-      
+    <ScrollView style={{backgroundColor:"#EAF1F4"}}>
+
       <Appbar.Header style={s.navbar}>
-      
-      <Appbar.Content title="Bienvenido" subtitle={user.User.email} />
-      <Appbar.Action icon="logout" onPress={handleSignOut} />
-      <Appbar.Action icon="dots-vertical" onPress={handleSignOut} />
-    </Appbar.Header>
+        <Appbar.Content title="Bienvenido" subtitle={user.User.email} />
+        <Appbar.Action icon="logout" onPress={handleSignOut} />
+        <Appbar.Action icon="account-circle" onPress={() => {
+          navigation.navigate("Perfil")
+        }} />
+      </Appbar.Header>
+
+      <Text>{"\n"}</Text>
+      <Text>{"\n"}</Text>
+      <Text>{"\n"}</Text>
 
       <View style={styles.row}>
         <TouchableOpacity
@@ -52,25 +51,15 @@ export default function Home({ navigation, route }) {
             })
           }
         >
-          <Image
-            style={styles.opcLogo}
-            source={require("../../../assets/images/dictionary.png")}
-          />
+          <Avatar.Icon size={100} icon="book-alphabet" color="#e84444" style={styles.opcLogo}/>
           <Text style={styles.opcTxt}>Diccionario</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() =>
-            navigation.navigate("Practica", {
-              nivel: "Nada",
-            })
-          }
+          onPress={() => navigation.navigate("Diccionario")}
         >
-          <Image
-            style={styles.opcLogo}
-            source={require("../../../assets/images/learning.png")}
-          />
+          <Avatar.Icon size={100} icon="pencil-ruler" color="#e84444" style={styles.opcLogo}/>
           <Text style={styles.opcTxt}>Practica</Text>
         </TouchableOpacity>
       </View>
@@ -84,10 +73,7 @@ export default function Home({ navigation, route }) {
             })
           }
         >
-          <Image
-            style={styles.opcLogo}
-            source={require("../../../assets/images/test.png")}
-          />
+          <Avatar.Icon size={100} icon="ab-testing" color="#e84444" style={styles.opcLogo}/>
           <Text style={styles.opcTxt}>Desafio</Text>
         </TouchableOpacity>
 
@@ -99,11 +85,22 @@ export default function Home({ navigation, route }) {
             })
           }
         >
-          <Image
-            style={styles.opcLogo}
-            source={require("../../../assets/images/advance.png")}
-          />
+          <Avatar.Icon size={100} icon="table-account" color="#e84444" style={styles.opcLogo}/>
           <Text style={styles.opcTxt}>Ver Avance</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate("Recursos")}
+        >
+          {/* <Image
+            style={styles.opcLogo}
+            source={require("@images/letters_and_numbers.png")}
+          /> */}
+          <Avatar.Icon size={100} icon="home-floor-1" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Recursos</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -111,35 +108,28 @@ export default function Home({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#EAF1F4",
-    alignContent: "space-around",
-    justifyContent: "center",
-    fontFamily: "sans-serif",
-    alignItems: "center",
-  },
   btn: {
-    width: 150,
-    height: 150,
-    backgroundColor: "#FF704D",
-    borderRadius: 150,
+    width: 170,
+    height: 170,    
+    borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
-    margin: 20,
+    margin: 10,
   },
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
   },
   opcLogo: {
-    width: 75,
-    height: 75,
-    marginBottom: 10,
+    backgroundColor: "#e8d054",
+    marginBottom: 15,
   },
   opcTxt: {
-    fontWeight: "bold",
+    fontWeight: "600",
     fontFamily: "sans-serif",
     textTransform: "uppercase",
+    fontSize: 16,
   },
 });

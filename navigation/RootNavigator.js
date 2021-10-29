@@ -6,7 +6,6 @@ import Firebase from '@database/firebase';
 import { AuthenticatedUserContext } from './AuthenticatedUserProvider';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
-import IndexStack from './IndexStack';
 
 const auth = Firebase.auth();
 

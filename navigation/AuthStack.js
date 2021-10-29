@@ -18,7 +18,7 @@ export default function AuthStack() {
           headerStyle: { backgroundColor: "#e84444" },
           headerTintColor: "#f8f8ff",
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: "600",
             fontFamily: "sans-serif",
           },
         }}
@@ -31,7 +31,7 @@ export default function AuthStack() {
           headerStyle: { backgroundColor: "#e84444" },
           headerTintColor: "#f8f8ff",
           headerTitleStyle: {
-            fontWeight: "bold",
+            fontWeight: "600",
             fontFamily: "sans-serif",
           },
         }}

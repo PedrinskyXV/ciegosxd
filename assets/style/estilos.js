@@ -11,7 +11,7 @@ export default StyleSheet.create({
   },
   containerCentrado: {
     flex: 1,
-    justifyContent: "center",
+    /* justifyContent: "center", */
     alignItems: "center",
     backgroundColor: bgPrincipal,
   },
@@ -23,7 +23,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   logoImg: {
-    width: "100%",
+    width: "720",
     height: 150,
     resizeMode: "cover",
   },

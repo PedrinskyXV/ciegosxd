@@ -21,7 +21,6 @@ const Register = () => {
   });
 
   const saveUser = async (data) => {
-    console.log(data);
     await db
       .collection("users")
       .doc(data.email)
@@ -47,7 +46,6 @@ const Register = () => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     if (data.clave !== data.clave2) {
       setState({ esCorrecto: true, Mensaje: "Las contraseñas no coinciden." });
     } else {

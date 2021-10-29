@@ -23,7 +23,7 @@ export default function Index({ navigation }) {
   const { user } = useContext(AuthenticatedUserContext);
 
   const saveNivel = async (newNivel) => {
-    console.log(newNivel);
+    //console.log(newNivel);
     await db
       .collection("users")
       .doc(user.User.email)
@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   enfasis: {
-    fontWeight: "bold",
+    fontWeight: "600",
   },
   text: {
     color: "#252430",
     textAlign: "center",
-    fontWeight: "bold",
+    fontWeight: "600",
     fontSize: 24,
     marginTop: 1,
     width: 260,

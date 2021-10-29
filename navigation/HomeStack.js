@@ -4,6 +4,9 @@ import { View, ActivityIndicator } from "react-native";
 
 import HomeScreen from "@views/Home/home";
 import IndexScreen from "@views/Index/index";
+import DiccionarioScreen from "@views/Diccionario/diccionario";
+import RecursosScreen from "@views/Recursos/recursos";
+import PerfilScreen from "@views/Perfil/perfil";
 
 import Firebase from "@database/firebase";
 import {} from "firebase/firestore";
@@ -18,7 +21,7 @@ export default function HomeStack() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("Email: " + user.User.email);
+  //console.log("Email: " + user.User.email);
 
   useEffect(() => {
     var docRef = db.collection("users").doc(user.User.email);
@@ -28,24 +31,23 @@ export default function HomeStack() {
       .then((doc) => {
         if (doc.exists) {
           var nivel = doc.data().nivel;
-          console.log("Nivel: ", nivel);
-          if (nivel === "") {
-            setUser({ User: user.User, conNivel: false });
-            
+          //console.log("Nivel: ", nivel);
+          if (nivel !== "") {
+            setUser({ User: user.User, conNivel: true, Nivel: nivel });
           }
         } else {
-          console.log("No such document!");          
+          console.log("No se encontro el nivel");
         }
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log("Error getting document:", error);
+        console.log("Error al obtener el documento: ", error);
         setIsLoading(false);
       });
   }, []);
 
   //console.log("Tiene nivel: " + user.displayName);
-  console.log("Con nivel: " + user.conNivel);
+  //console.log("Con nivel: " + user.conNivel);
 
   if (isLoading) {
     return (
@@ -69,6 +71,48 @@ export default function HomeStack() {
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Diccionario"
+        component={DiccionarioScreen}
+        options={{
+          title: "Aprende con el Diccionario",
+          headerStyle: { backgroundColor: "#e84444" },
+          headerTintColor: "#f8f8ff",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontFamily: "sans-serif",
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Recursos"
+        component={RecursosScreen}
+        options={{
+          title: "Recursos para aprender",
+          headerStyle: { backgroundColor: "#e84444" },
+          headerTintColor: "#f8f8ff",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontFamily: "sans-serif",
+          },
+        }}
+      />
+
+      <Stack.Screen
+        name="Perfil"
+        component={PerfilScreen}
+        options={{
+          title: "Mi perfil",
+          headerStyle: { backgroundColor: "#e84444" },
+          headerTintColor: "#f8f8ff",
+          headerTitleStyle: {
+            fontWeight: "600",
+            fontFamily: "sans-serif",
+          },
+        }}
       />
     </Stack.Navigator>
   );
