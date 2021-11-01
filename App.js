@@ -9,6 +9,7 @@ import Index from "./src/views/Index/index";
 import Home from "./src/views/Home/home";
 import Settings from "./src/views/Settings/settings";
 import Phrases from "./src/views/Send/phrases";
+import Recive from "./src/views/Advance/recive";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,7 @@ export default function App() {
           }}
         />
         <Stack.Screen name="Register" component={Register} />*/}
+        <Stack.Screen name="Recive" component={Recive} />
         <Stack.Screen name="Phrases" component={Phrases} />
         <Stack.Screen name="Bienvenido" options={{headerShown: false}} component={Index} />
         <Stack.Screen name="Inicio" component={Home} />

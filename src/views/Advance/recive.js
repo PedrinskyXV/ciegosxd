@@ -1,41 +1,35 @@
 import { StatusBar } from "expo-status-bar";
 import React, {useState} from "react";
-import { StyleSheet, Pressable, Text, TextInput, View, Alert } from "react-native";
-
+import { StyleSheet, Pressable, Text, TextInput, View } from "react-native";
 import Firebase from '@database/firebase';
+import { useEffect } from "react";
 const db = Firebase.firestore();
 
-export default function Phrases({navigation}) {
-    const initalState = {
-        phrases:"",
+export default function Recive({navigation}) {
+
+    const [state, setState] = useState({
+        phrase: [],
+    });
+    var cont = 0;
+    useEffect(()=>{
+        const obtenerDatos=async()=>{            
+        const datos = await db.collection("phrases").get();
+
+        datos.forEach((documento) => {
+            setState({ phrase: [documento.data().phrases] });
+            cont++;
+        })
     }
-
-    const [state, setState] = useState(initalState);
-
-    const handleChange = (name, value) => {
-        setState({ ...state, [name]: value});
-    };
-
-    const savePhrase = async () => {
-        await db.collection('phrases').doc().set(state);
-        navigation.navigate('Recive');
-    }
+    
+    obtenerDatos();
+    },[])
 
     return (
         <View style={styles.container}>
             <View style={styles.containerIn}>
-                    {<Text style={styles.titulo}> Add Phrases </Text>}
-                    <View style={styles.inputGroup}>
-                        <TextInput
-                            placeholder="New Phrase"
-                            onChangeText={(value) => handleChange("phrases", value)}
-                            value={state.phrases}
-                        />
-                    </View>
-                    <View>
-                        <Pressable style={styles.button} onPress={() => savePhrase()}>
-                            <Text style={styles.text}>SAVE</Text>
-                        </Pressable>
+                    <Text style={styles.titulo}> Get Phrases </Text>
+                    <View style={styles.inputGroup}>                        
+                        <Text>{state.phrase}</Text>
                     </View>
                 </View>
                 <StatusBar style="auto" />
