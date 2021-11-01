@@ -9,6 +9,7 @@ import Index from "./src/views/Index/index";
 import Home from "./src/views/Home/home";
 import Settings from "./src/views/Settings/settings";
 import Phrases from "./src/views/Send/phrases";
+import Words from "./src/views/Send/words";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +17,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/*<Stack.Screen
+        <Stack.Screen
           name="Login"
           component={Login}
           options={{
@@ -30,7 +31,8 @@ export default function App() {
             }
           }}
         />
-        <Stack.Screen name="Register" component={Register} />*/}
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Words" component={Words} />
         <Stack.Screen name="Phrases" component={Phrases} />
         <Stack.Screen name="Bienvenido" options={{headerShown: false}} component={Index} />
         <Stack.Screen name="Inicio" component={Home} />
