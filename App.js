@@ -10,6 +10,7 @@ import Home from "./src/views/Home/home";
 import Settings from "./src/views/Settings/settings";
 import Phrases from "./src/views/Send/phrases";
 import Words from "./src/views/Send/words";
+import Practice from "./src/views/Practice/practice";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen name="Practice" component={Practice} />
         <Stack.Screen
           name="Login"
           component={Login}
