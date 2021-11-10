@@ -7,6 +7,9 @@ import IndexScreen from "@views/Index/index";
 import DiccionarioScreen from "@views/Diccionario/diccionario";
 import RecursosScreen from "@views/Recursos/recursos";
 import PerfilScreen from "@views/Perfil/perfil";
+import PracticeScreen from "@views/Practice/practice";
+import Phase2Screen from "@views/Advance/phase2";
+import Phase3Screen from "@views/Advance/phase3";
 
 import Firebase from "@database/firebase";
 import {} from "firebase/firestore";
@@ -59,20 +62,24 @@ export default function HomeStack() {
 
   return (
     <Stack.Navigator headerMode="none">
-      {!user.conNivel && (
+      {/* {!user.conNivel && (
         <Stack.Screen
           name="Index"
           component={IndexScreen}
           options={{ headerShown: false }}
         />
-      )}
-
+      )} */}
+      <Stack.Screen
+        name="Practice"
+        component={PracticeScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-
+{/*
       <Stack.Screen
         name="Diccionario"
         component={DiccionarioScreen}
@@ -113,7 +120,7 @@ export default function HomeStack() {
             fontFamily: "sans-serif",
           },
         }}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }
