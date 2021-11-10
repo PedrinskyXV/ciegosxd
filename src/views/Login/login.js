@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
-import { TextInput, Button, Checkbox, HelperText } from "react-native-paper"; //Material UI
+import {
+  TextInput,
+  Button,
+  Checkbox,
+  HelperText,
+  Chip,
+} from "react-native-paper"; //Material UI
 import { useForm } from "react-hook-form"; //Simple form validation with React Hook Form.
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
@@ -13,13 +19,9 @@ const auth = Firebase.auth();
 
 const Login = (props) => {
   const [state, setState] = useState({
-    email: "",
-    clave: "",
+    esCorrecto: false,
+    Mensaje: "",
   });
-
-  const handleChangeText = (name, value) => {
-    setState({ ...state, [name]: value });
-  };
 
   const { control, setFocus, handleSubmit } = useForm({
     defaultValues: {
@@ -32,9 +34,28 @@ const Login = (props) => {
   const onSubmit = async (data) => {
     try {
       await auth.signInWithEmailAndPassword(data.email, data.clave);
-      props.navigation.navigate("Bienvenido");
     } catch (error) {
       console.log(error);
+      switch (error.code) {
+        case "auth/user-not-found":
+          setState({
+            esCorrecto: true,
+            Mensaje: "No hay ninguna cuenta con ese email.",
+          });
+          break;
+        case "auth/wrong-password":
+          setState({
+            esCorrecto: true,
+            Mensaje: "La contraseña es incorrecta.",
+          });
+          break;
+        default:
+          setState({
+            esCorrecto: true,
+            Mensaje: "Ocurrio un error al iniciar sesión.",
+          });
+          break;
+      }
     }
   };
 
@@ -57,10 +78,9 @@ const Login = (props) => {
         setFocus={setFocus}
         formConfigArray={[
           {
-            type: "text",
             name: "email",
+            type: "email",
             textInputProps: {
-              mode: "outlined",
               label: "Email",
               left: <TextInput.Icon name={"email"} />,
             },
@@ -68,6 +88,11 @@ const Login = (props) => {
               required: {
                 value: true,
                 message: "Email es requerido.",
+              },
+              pattern: {
+                value:
+                  /[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})/,
+                message: "Email es incorrecto.",
               },
             },
           },
@@ -97,6 +122,16 @@ const Login = (props) => {
       />
 
       <Text>
+        {"\n"}        
+      </Text>
+
+      {state.esCorrecto ? (
+        <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>
+          {state.Mensaje}
+        </Chip>
+      ) : null}
+
+      <Text>
         {"\n"}
         {"\n"}
       </Text>
@@ -117,7 +152,7 @@ const Login = (props) => {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
         <View>
-          <Text style={{ width: 50, textAlign: "center" }}>Unete</Text>
+          <Text style={{ width: 50, textAlign: "center" }}>Únete</Text>
         </View>
         <View style={{ flex: 1, height: 1, backgroundColor: "black" }} />
       </View>
@@ -129,7 +164,7 @@ const Login = (props) => {
           icon="open-in-new"
           mode="contained"
           onPress={() => {
-            props.navigation.navigate("Register");
+            props.navigation.navigate("Signup");
           }}
           style={s.btnLogin}
         >

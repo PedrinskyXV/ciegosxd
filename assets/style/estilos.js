@@ -11,22 +11,37 @@ export default StyleSheet.create({
   },
   containerCentrado: {
     flex: 1,
-    justifyContent: "center",
+    /* justifyContent: "center", */
     alignItems: "center",
     backgroundColor: bgPrincipal,
   },
   btnLogin: {
     height: 50,
     backgroundColor: colorPrin,
+    color: "#f8f8ff",
     alignContent: 'center',
     justifyContent: 'center',
   },
   logoImg: {
-    width: "100%",
+    width: "720",
     height: 150,
     resizeMode: "cover",
   },
   logoContainer: {
     padding: 25,
+  },
+  navbar: {
+    backgroundColor: colorPrin,
+    color: '#f8f8ff'
+  },
+  bannerAlert: {
+    backgroundColor: "#f4a39f",
+    height: 32,    
+  },
+  bannerMsj: {
+    color: "#3e3939",
+    fontSize: 14,
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
 });

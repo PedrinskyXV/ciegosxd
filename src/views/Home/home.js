@@ -1,113 +1,135 @@
-import React from 'react';
-import { StyleSheet, Text, View, Button, ToastAndroid, TouchableOpacity, Image} from 'react-native';
+import React, { useContext } from "react";
 
-export default function Home({navigation, route}) {
-  const {nivel} = route.params;
-  const showToast = () => {
-    ToastAndroid.show(nivel, ToastAndroid.SHORT);
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+
+import { Appbar, Avatar, Text } from "react-native-paper";
+import s from "@assets/style/estilos";
+
+import Firebase from "@database/firebase";
+import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
+
+const auth = Firebase.auth();
+
+export default function Home({ navigation }) {
+  const handleSignOut = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const { user } = useContext(AuthenticatedUserContext);
+
   return (
-    <View style={styles.container}>
-      <Button title="Toggle Toast" onPress={() => showToast()} />
+    <ScrollView style={{backgroundColor:"#EAF1F4"}}>
+
+      <Appbar.Header style={s.navbar}>
+        <Appbar.Content title="Bienvenido" subtitle={user.User.email} />
+        <Appbar.Action icon="logout" onPress={handleSignOut} />
+        <Appbar.Action icon="account-circle" onPress={() => {
+          navigation.navigate("Perfil")
+        }} />
+      </Appbar.Header>
+
+      <Text>{"\n"}</Text>
+      <Text>{"\n"}</Text>
+      <Text>{"\n"}</Text>
 
       <View style={styles.row}>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() =>
-          navigation.navigate("Diccionario", {
-            nivel: "Nada",
-          })
-        }
-      >
-        <Image
-        style={styles.opcLogo}
-        source={require('../../../assets/images/dictionary.png')}
-        />        
-        <Text style={styles.opcTxt}>Diccionario</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() =>
+            navigation.navigate("Diccionario", {
+              nivel: "Nada",
+            })
+          }
+        >
+          <Avatar.Icon size={100} icon="book-alphabet" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Diccionario</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() =>
-          navigation.navigate("Practica", {
-            nivel: "Nada",
-          })
-        }
-      >
-        <Image
-        style={styles.opcLogo}
-        source={require('../../../assets/images/learning.png')}
-        />        
-        <Text style={styles.opcTxt}>Practica</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate("Diccionario")}
+        >
+          <Avatar.Icon size={100} icon="pencil-ruler" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Practica</Text>
+        </TouchableOpacity>
       </View>
-      
+
       <View style={styles.row}>
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() =>
-          navigation.navigate("Home", {
-            nivel: "Nada",
-          })
-        }
-      >
-        <Image
-        style={styles.opcLogo}
-        source={require('../../../assets/images/test.png')}
-        />        
-        <Text style={styles.opcTxt}>Desafio</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() =>
+            navigation.navigate("Home", {
+              nivel: "Nada",
+            })
+          }
+        >
+          <Avatar.Icon size={100} icon="ab-testing" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Desafio</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.btn}
-        onPress={() =>
-          navigation.navigate("Home", {
-            nivel: "Nada",
-          })
-        }
-      >
-        <Image
-        style={styles.opcLogo}
-        source={require('../../../assets/images/advance.png')}
-        />        
-        <Text style={styles.opcTxt}>Ver Avance</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() =>
+            navigation.navigate("Home", {
+              nivel: "Nada",
+            })
+          }
+        >
+          <Avatar.Icon size={100} icon="table-account" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Ver Avance</Text>
+        </TouchableOpacity>
       </View>
 
-    </View>
+      <View style={styles.row}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate("Recursos")}
+        >
+          {/* <Image
+            style={styles.opcLogo}
+            source={require("@images/letters_and_numbers.png")}
+          /> */}
+          <Avatar.Icon size={100} icon="home-floor-1" color="#e84444" style={styles.opcLogo}/>
+          <Text style={styles.opcTxt}>Recursos</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#EAF1F4",
-    alignContent: "space-around",
-    justifyContent: "center",
-    fontFamily: 'sans-serif',
-    alignItems: "center"    
-  },
   btn: {
-    width: 150,
-    height: 150,    
-    backgroundColor: "#FF704D",
-    borderRadius: 150,
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 20        
+    width: 170,
+    height: 170,    
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
   },
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
   },
   opcLogo: {
-    width: 75,
-    height: 75,
-    marginBottom: 10
+    backgroundColor: "#e8d054",
+    marginBottom: 15,
   },
   opcTxt: {
-    fontWeight: "bold",
-    fontFamily: 'sans-serif',
-    textTransform: "uppercase"
-  }
+    fontWeight: "600",
+    fontFamily: "sans-serif",
+    textTransform: "uppercase",
+    fontSize: 16,
+  },
 });
