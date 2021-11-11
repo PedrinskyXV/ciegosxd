@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, ScrollView, Image } from "react-native";
 
-import {
-  TextInput,
-  Button,
-  Checkbox,
-  HelperText,
-  Chip,
-} from "react-native-paper"; //Material UI
+import { TextInput, Button, Chip } from "react-native-paper"; //Material UI
 import { useForm } from "react-hook-form"; //Simple form validation with React Hook Form.
 import { FormBuilder } from "react-native-paper-form-builder"; //Form builder
 
@@ -121,9 +115,7 @@ const Login = (props) => {
         ]}
       />
 
-      <Text>
-        {"\n"}        
-      </Text>
+      <Text>{"\n"}</Text>
 
       {state.esCorrecto ? (
         <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>

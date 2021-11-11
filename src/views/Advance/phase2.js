@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, Button, StyleSheet } from "react-native";
-import { Title, Text, TextInput, Chip } from "react-native-paper";
+import { View, ScrollView, Button } from "react-native";
+import { Title, Text, TextInput } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
-import { useLinkProps } from "@react-navigation/native";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const db = Firebase.firestore();
@@ -44,14 +43,14 @@ export default function Phase2(props) {
       setText("");
       setAcer(acer + 1);
       setReali(reali + 1);
-    } else if(valor != word && valor !="" && valor != null){
+    } else if (valor != word && valor != "" && valor != null) {
       setReali(reali + 1);
     }
     if (reali == 5) {
       notify();
-      if (acer == 5){
+      if (acer == 5) {
         props.navigation.navigate("Pass");
-      }else{
+      } else {
         props.navigation.navigate("noPass");
       }
     }
@@ -126,8 +125,15 @@ export default function Phase2(props) {
           />
         </View>
         <View style={s.fixToText}>
-          <Button title="Cancelar" onPress={() => props.navigation.navigate("Home")} />
-          <Button title="Verificar" color="#0CBA41" onPress={() => verficarSiguiente(text)} />
+          <Button
+            title="Cancelar"
+            onPress={() => props.navigation.navigate("Home")}
+          />
+          <Button
+            title="Verificar"
+            color="#0CBA41"
+            onPress={() => verficarSiguiente(text)}
+          />
         </View>
       </ScrollView>
     );

@@ -27,8 +27,6 @@ export default function HomeStack() {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [isLoading, setIsLoading] = useState(true);
 
-  //console.log("Email: " + user.User.email);
-
   useEffect(() => {
     var docRef = db.collection("users").doc(user.User.email);
 
@@ -51,9 +49,6 @@ export default function HomeStack() {
         setIsLoading(false);
       });
   }, []);
-
-  //console.log("Tiene nivel: " + user.displayName);
-  //console.log("Con nivel: " + user.conNivel);
 
   if (isLoading) {
     return (

@@ -1,20 +1,23 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, ScrollView, StyleSheet, useColorScheme } from "react-native";
-import { Title, Text, TextInput, Button, Chip , Card, Paragraph} from "react-native-paper";
+import React, { useContext } from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import {
+  Title,
+  Button,
+  Card,
+  Paragraph,
+} from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
-import { useLinkProps } from "@react-navigation/native";
 import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
 
 const db = Firebase.firestore();
-const auth = Firebase.auth();
 
 export default function Pass(props) {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [value, setValue] = React.useState(user.Nivel);
   const [change, setChange] = React.useState(0);
   const saveNivel = async (newNivel) => {
-    //console.log(newNivel);
+    
     await db
       .collection("users")
       .doc(user.User.email)
@@ -48,9 +51,16 @@ export default function Pass(props) {
       <Card>
         <Card.Content>
           <Title style={styles.Title}>Has aumentado tu conocimiento !!!</Title>
-          <Paragraph style={styles.Resultados}>Superaste la fase: {value}</Paragraph>
+          <Paragraph style={styles.Resultados}>
+            Superaste la fase: {value}
+          </Paragraph>
         </Card.Content>
-        <Card.Cover resizeMethod="scale" source={{ uri: "https://cdn.pixabay.com/photo/2021/09/25/15/46/step-by-step-6655274_960_720.jpg" }} />
+        <Card.Cover
+          resizeMethod="scale"
+          source={{
+            uri: "https://cdn.pixabay.com/photo/2021/09/25/15/46/step-by-step-6655274_960_720.jpg",
+          }}
+        />
         <Card.Actions>
           <Button onPress={() => avanzar(value)}>Aceptar</Button>
         </Card.Actions>

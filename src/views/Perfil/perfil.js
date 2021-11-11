@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 
 import { Text, Button, Avatar, RadioButton, Divider } from "react-native-paper";
@@ -9,14 +9,12 @@ import {} from "firebase/firestore";
 import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
 
 const db = Firebase.firestore();
-const auth = Firebase.auth();
 
 const Perfil = (props) => {
   const { user, setUser } = useContext(AuthenticatedUserContext);
   const [value, setValue] = React.useState(user.Nivel);
 
   const saveNivel = async (newNivel) => {
-    //console.log(newNivel);
     await db
       .collection("users")
       .doc(user.User.email)
@@ -25,8 +23,8 @@ const Perfil = (props) => {
       })
       .then(() => {
         console.log("Nivel actualizado.");
-        setUser({ User: user.User, conNivel: true, Nivel: newNivel });        
-        props.navigation.navigate("Home");        
+        setUser({ User: user.User, conNivel: true, Nivel: newNivel });
+        props.navigation.navigate("Home");
       })
       .catch((error) => {
         console.error("Error al actualizar el nivel: ", error);
@@ -65,13 +63,13 @@ const Perfil = (props) => {
           <View style={styles.row}>
             <RadioButton value="Suficiente" />
             <Text>Suficiente</Text>
-          </View>          
+          </View>
         </RadioButton.Group>
       </View>
 
-      <View style={{marginVertical: 25}}>
+      <View style={{ marginVertical: 25 }}>
         <Button
-            color="#e8d054"
+          color="#e8d054"
           icon="refresh"
           mode="contained"
           onPress={() => saveNivel(value)}

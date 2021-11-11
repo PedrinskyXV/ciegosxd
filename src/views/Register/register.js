@@ -63,8 +63,7 @@ const Register = () => {
           default:
             setState({
               esCorrecto: true,
-              Mensaje:
-                "Ocurrio un error al registrarse.",
+              Mensaje: "Ocurrio un error al registrarse.",
             });
             break;
         }
@@ -173,9 +172,7 @@ const Register = () => {
         ]}
       />
 
-      <Text>        
-        {"\n"}
-      </Text>
+      <Text>{"\n"}</Text>
 
       {state.esCorrecto ? (
         <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>

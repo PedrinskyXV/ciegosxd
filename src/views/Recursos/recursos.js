@@ -5,9 +5,7 @@ import {
   BottomNavigation,
   Title,
   DataTable,
-  Subheading,
   Paragraph,
-  Caption,
   Text,
 } from "react-native-paper";
 import s from "@assets/style/estilos";
@@ -372,7 +370,7 @@ const SymbolsRoute = () => {
             <DataTable.Title>Signos de puntuación</DataTable.Title>
           </DataTable.Header>
 
-          <DataTable.Row style={{backgroundColor: "#f3f3f3"}}>
+          <DataTable.Row style={{ backgroundColor: "#f3f3f3" }}>
             {simbolos.map((s) => (
               <DataTable.Cell style={styles.celda}>
                 <View>
@@ -381,7 +379,7 @@ const SymbolsRoute = () => {
               </DataTable.Cell>
             ))}
           </DataTable.Row>
-          <DataTable.Row style={{backgroundColor: "#ebebeb"}}>
+          <DataTable.Row style={{ backgroundColor: "#ebebeb" }}>
             {simbolos.map((s) => (
               <DataTable.Cell style={styles.celda}>
                 <View>
@@ -391,7 +389,7 @@ const SymbolsRoute = () => {
             ))}
           </DataTable.Row>
 
-          <DataTable.Row style={{backgroundColor: "#f3f3f3"}}>
+          <DataTable.Row style={{ backgroundColor: "#f3f3f3" }}>
             {simbolos2.map((s) => (
               <DataTable.Cell style={styles.celda}>
                 <View>
@@ -401,7 +399,7 @@ const SymbolsRoute = () => {
             ))}
           </DataTable.Row>
 
-          <DataTable.Row style={{backgroundColor: "#ebebeb"}}>
+          <DataTable.Row style={{ backgroundColor: "#ebebeb" }}>
             {simbolos2.map((s) => (
               <DataTable.Cell style={styles.celda}>
                 <View>
@@ -518,7 +516,7 @@ const styles = StyleSheet.create({
     fontSize: 48,
     fontFamily: "Braille-Esp",
     textTransform: "uppercase",
-    fontWeight: "500",    
+    fontWeight: "500",
   },
   num: {
     fontSize: 48,
@@ -564,7 +562,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
     marginVertical: 15,
   },
-  celda: {    
+  celda: {
     justifyContent: "center",
     alignContent: "center",
   },

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
 import { View, ScrollView, Button } from "react-native";
-import { Title, Text, TextInput, Chip } from "react-native-paper";
+import { Title, Text, TextInput } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,25 +14,20 @@ function getRandomInt() {
   return Math.floor(Math.random() * (3 - 1)) + 1;
 }
 const datos = [];
-const acertado = 0;
-const realizadas = 0;
 
 export default function Practice(props) {
   const [isLoaded] = useFonts({
     "Braille-Preview": require("@fonts/braille_preview.ttf"),
     "Braille-Esp": require("@fonts/braille_esp.ttf"),
   });
-  const [ej, setEj] = React.useState("");
-  const [phrase, setPhrase] = React.useState("");
+
   const [word, setWord] = React.useState("");
   const [text, setText] = React.useState("");
-  //const datos = [];
   const [pos, setPost] = React.useState(0);
-  //const [acer, setAcer] = React.useState(0);
   const [reali, setReali] = React.useState(0);
   const notify = (tipo) => {
     if (tipo == "success") {
-      toast.success('Bien Hecho, respuesta correcta', {
+      toast.success("Bien Hecho, respuesta correcta", {
         theme: "dark",
         position: "top-center",
         autoClose: 2000,
@@ -41,10 +36,9 @@ export default function Practice(props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
-    }
-    else if(tipo == "warning"){
-      toast.error('La respuesta correcta es: '+word[pos], {
+      });
+    } else if (tipo == "warning") {
+      toast.error("La respuesta correcta es: " + word[pos], {
         theme: "dark",
         position: "top-center",
         autoClose: 2000,
@@ -53,10 +47,9 @@ export default function Practice(props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
-    }
-    else if(tipo == "" || tipo == null){
-      toast.error('No ha ingresado datos', {
+      });
+    } else if (tipo == "" || tipo == null) {
+      toast.error("No ha ingresado datos", {
         theme: "dark",
         position: "top-center",
         autoClose: 2000,
@@ -65,22 +58,21 @@ export default function Practice(props) {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
-  }
+  };
   const verficarSiguiente = (valor) => {
-    if (valor == word[pos]){
-      setPost(getRandomInt(0,datos.length));
+    if (valor == word[pos]) {
+      setPost(getRandomInt(0, datos.length));
       notify("success");
       setText("");
-      //setAcer(acer + 1);
-    } else if(valor != word[pos] && valor != "" && valor != null){
+    } else if (valor != word[pos] && valor != "" && valor != null) {
       notify("warning");
-    }else{
+    } else {
       notify();
     }
     setReali(reali + 1);
-  }
+  };
   useEffect(() => {
     db.collection("words")
       .get()
@@ -115,8 +107,8 @@ export default function Practice(props) {
           pauseOnHover
         />
         <View>
-          <Title style={{textAlign: "justify"}}>
-          Practica tus conocimientos:
+          <Title style={{ textAlign: "justify" }}>
+            Practica tus conocimientos:
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -125,20 +117,18 @@ export default function Practice(props) {
             multiline
             left={<TextInput.Icon name="braille" />}
             mode="flat"
-            style={{fontSize: 38}}            
+            style={{ fontSize: 38 }}
             value={word[pos]}
-            editable="false"            
+            editable="false"
             numberOfLines="1"
-            theme={
-              {
-                fonts: {
-                  regular: {
-                    fontFamily: 'Braille-Esp',
-                    fontSize: 16
-                  }
-                }
-              }
-            }
+            theme={{
+              fonts: {
+                regular: {
+                  fontFamily: "Braille-Esp",
+                  fontSize: 16,
+                },
+              },
+            }}
           />
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -153,8 +143,15 @@ export default function Practice(props) {
           />
         </View>
         <View style={s.fixToText}>
-          <Button title="Regresar" onPress={() => props.navigation.navigate("Home")} />
-          <Button title="Verificar" color="#0CBA41" onPress={() => verficarSiguiente(text)} />
+          <Button
+            title="Regresar"
+            onPress={() => props.navigation.navigate("Home")}
+          />
+          <Button
+            title="Verificar"
+            color="#0CBA41"
+            onPress={() => verficarSiguiente(text)}
+          />
         </View>
       </ScrollView>
     );

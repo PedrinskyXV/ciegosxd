@@ -6,7 +6,6 @@ import {
   Text,
   TextInput,
   View,
-  Alert,
 } from "react-native";
 
 import Firebase from "@database/firebase";

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, Button, StyleSheet } from "react-native";
-import { Title, Text, TextInput, Chip } from "react-native-paper";
+import { View, ScrollView, Button } from "react-native";
+import { Title, Text, TextInput } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { useLinkProps } from "@react-navigation/native";
@@ -38,8 +38,8 @@ export default function Phase3(props) {
       });
   } */
   const verficarSiguiente = (valor) => {
-    if (valor == phrase[pos]){
-      setPost(getRandomInt(0,datos.length));
+    if (valor == phrase[pos]) {
+      setPost(getRandomInt(0, datos.length));
       setState({
         esCorrecto: false,
         Mensaje: null,
@@ -47,17 +47,17 @@ export default function Phase3(props) {
       setText("");
       setAcer(acer + 1);
       setReali(reali + 1);
-    } else if(valor != phrase && valor !="" && valor != null){
+    } else if (valor != phrase && valor != "" && valor != null) {
       setReali(reali + 1);
     }
     if (reali == 5) {
-      if (acer == 5){
+      if (acer == 5) {
         props.navigation.navigate("Home");
-      }else{
+      } else {
         props.navigation.navigate("Home");
       }
     }
-  }
+  };
   useEffect(() => {
     db.collection("phrases")
       .get()
@@ -81,8 +81,8 @@ export default function Phase3(props) {
     return (
       <ScrollView style={s.container}>
         <View>
-          <Title style={{textAlign: "justify"}}>
-          Prueba tus conocimientos!!!
+          <Title style={{ textAlign: "justify" }}>
+            Prueba tus conocimientos!!!
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -91,20 +91,18 @@ export default function Phase3(props) {
             multiline
             left={<TextInput.Icon name="braille" />}
             mode="flat"
-            style={{fontSize: 38}}            
+            style={{ fontSize: 38 }}
             value={phrase[pos]}
-            editable="false"            
+            editable="false"
             numberOfLines="3"
-            theme={
-              {
-                fonts: {
-                  regular: {
-                    fontFamily: 'Braille-Esp',
-                    fontSize: 16
-                  }
-                }
-              }
-            }
+            theme={{
+              fonts: {
+                regular: {
+                  fontFamily: "Braille-Esp",
+                  fontSize: 16,
+                },
+              },
+            }}
           />
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -119,8 +117,15 @@ export default function Phase3(props) {
           />
         </View>
         <View style={s.fixToText}>
-          <Button title="Cancelar" onPress={() => props.navigation.navigate("Home")} />
-          <Button title="Verificar" color="#0CBA41" onPress={() => verficarSiguiente(text)} />
+          <Button
+            title="Cancelar"
+            onPress={() => props.navigation.navigate("Home")}
+          />
+          <Button
+            title="Verificar"
+            color="#0CBA41"
+            onPress={() => verficarSiguiente(text)}
+          />
         </View>
       </ScrollView>
     );

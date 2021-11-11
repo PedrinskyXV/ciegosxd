@@ -9,21 +9,17 @@ import {
   Image,
 } from "react-native";
 import s from "@assets/style/estilos";
-import { Drawer } from "react-native-paper";
 
 import Firebase from "@database/firebase";
 import {} from "firebase/firestore";
 import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
 
 const db = Firebase.firestore();
-const auth = Firebase.auth().currentUser;
 
 export default function Index({ navigation }) {
-  const [active, setActive] = React.useState("");
   const { user } = useContext(AuthenticatedUserContext);
 
   const saveNivel = async (newNivel) => {
-    //console.log(newNivel);
     await db
       .collection("users")
       .doc(user.User.email)

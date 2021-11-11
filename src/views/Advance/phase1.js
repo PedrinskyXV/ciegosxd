@@ -11,14 +11,9 @@ function getRandomLetter() {
   var n = 0;
   var letra = "";
   n = Math.floor(Math.random() * (90 - 65)) + 65;
-  //Pasar n letra
   letra = String.fromCharCode(n);
-  // console.log(letra);
   return letra;
 }
-const datos = [];
-const acertado = 0;
-const realizadas = 0;
 
 export default function Phase1(props) {
   const [isLoaded] = useFonts({
@@ -27,8 +22,6 @@ export default function Phase1(props) {
   });
   const [letter, setLetter] = React.useState("");
   const [text, setText] = React.useState("");
-  //const datos = [];
-  //const [pos, setLetter] = React.useState(0);
   const [acer, setAcer] = React.useState(0);
   const [reali, setReali] = React.useState(0);
   const notify = (tipo) => {

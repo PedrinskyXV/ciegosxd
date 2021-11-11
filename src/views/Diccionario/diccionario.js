@@ -1,25 +1,8 @@
 import React from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, StyleSheet, Image } from "react-native";
-import {
-  BottomNavigation,
-  Title,
-  DataTable,
-  Subheading,
-  Paragraph,
-  Caption,
-  Text,
-  TextInput,
-} from "react-native-paper";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { Title, Text, TextInput } from "react-native-paper";
 import s from "@assets/style/estilos";
-
-//#region constantes texto
-const textoTitulo = ["El Braille: lectura, aprendizaje, alfabeto y signos"];
-
-const textoIntroduccion = [
-  "En 1825, Luis Braille ideó su sistema de puntos en relieve: el sistema braille, también conocido como cecografía, aporta a las personas ciegas una herramienta válida y eficaz para leer, escribir, acceder a la educación, a la cultura y a la información sin necesidad de ver, guiándose solo por el tacto.",
-];
-//#endregion
 
 export default function Diccionario() {
   const [isLoaded] = useFonts({
@@ -40,8 +23,8 @@ export default function Diccionario() {
     return (
       <ScrollView style={s.container}>
         <View>
-          <Title style={{textAlign: "justify"}}>
-          Busca una palabra para ver su significado en braille a continuacion:
+          <Title style={{ textAlign: "justify" }}>
+            Busca una palabra para ver su significado en braille a continuacion:
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -61,20 +44,18 @@ export default function Diccionario() {
             multiline
             left={<TextInput.Icon name="braille" />}
             mode="flat"
-            style={{fontSize: 38}}            
+            style={{ fontSize: 38 }}
             value={text}
-            editable="false"            
+            editable="false"
             numberOfLines="3"
-            theme={
-              {
-                fonts: {
-                  regular: {
-                    fontFamily: 'Braille-Preview',
-                    fontSize: 16
-                  }
-                }
-              }
-            }
+            theme={{
+              fonts: {
+                regular: {
+                  fontFamily: "Braille-Preview",
+                  fontSize: 16,
+                },
+              },
+            }}
           />
         </View>
       </ScrollView>
