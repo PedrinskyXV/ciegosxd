@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
 import { View, ScrollView, Button } from "react-native";
-import { Title, Text, TextInput, Chip } from "react-native-paper";
+import { Title, Text, TextInput, Chip, Caption } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { ToastContainer, toast } from "react-toastify";
@@ -74,7 +74,7 @@ export default function Phase1(props) {
     //setLetter(letter);
   }, []);
   if (!isLoaded) {
-    console.log("ERROR AL CARGAR FONTS");
+    
     return (
       <View>
         <Text>ERROR AL CARGAR FONTS</Text>
@@ -119,6 +119,9 @@ export default function Phase1(props) {
               },
             }}
           />
+        </View>
+        <View>
+          <Caption>{letter}</Caption>
         </View>
         <View style={{ marginVertical: 20 }}>
           <TextInput

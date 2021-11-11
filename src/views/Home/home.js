@@ -9,19 +9,6 @@ import Firebase from "@database/firebase";
 import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
 
 const auth = Firebase.auth();
-const { user, setUser } = useContext(AuthenticatedUserContext);
-
-const nivel = () => {
-  if (user.Nivel == "Poco") {
-    navigation.navigate("Phase2");
-  }
-  if (user.Nivel == "Ninguna") {
-    navigation.navigate("Phase1");
-  }
-  if (user.Nivel == "Suficiente") {
-    navigation.navigate("Phase3");
-  }
-};
 
 export default function Home({ navigation }) {
   const handleSignOut = async () => {
@@ -33,6 +20,18 @@ export default function Home({ navigation }) {
   };
 
   const { user } = useContext(AuthenticatedUserContext);
+
+  const nivel = () => {
+    if (user.Nivel == "Poco") {
+      navigation.navigate("Phase2");
+    }
+    if (user.Nivel == "Ninguna") {
+      navigation.navigate("Phase1");
+    }
+    if (user.Nivel == "Suficiente") {
+      navigation.navigate("Phase3");
+    }
+  };
 
   return (
     <ScrollView style={{ backgroundColor: "#EAF1F4" }}>
@@ -71,7 +70,7 @@ export default function Home({ navigation }) {
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => navigation.navigate("Diccionario")}
+          onPress={() => navigation.navigate("Practice")}
         >
           <Avatar.Icon
             size={100}

@@ -17,7 +17,7 @@ import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider"
 const db = Firebase.firestore();
 
 export default function Index({ navigation }) {
-  const { user } = useContext(AuthenticatedUserContext);
+  const { user, setUser } = useContext(AuthenticatedUserContext);
 
   const saveNivel = async (newNivel) => {
     await db
@@ -28,6 +28,7 @@ export default function Index({ navigation }) {
       })
       .then(() => {
         console.log("Nivel actualizado.");
+        setUser({ User: user.User, conNivel: true, Nivel: newNivel });
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -58,7 +59,7 @@ export default function Index({ navigation }) {
 
         <TouchableOpacity
           style={styles.btn}
-          onPress={() => saveNivel("Ninguna")}
+          onPress={() => saveNivel("Ninguno")}
         >
           <Text style={styles.btnText}>
             <Text style={styles.enfasis}>Ninguna</Text>, no tengo ni idea de
@@ -66,7 +67,7 @@ export default function Index({ navigation }) {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.btn} onPress={() => saveNivel("Poca")}>
+        <TouchableOpacity style={styles.btn} onPress={() => saveNivel("Poco")}>
           <Text style={styles.btnText}>
             <Text style={styles.enfasis}>Poca</Text>, conozco algunos elementos
             de este sistema.

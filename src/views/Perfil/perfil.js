@@ -31,6 +31,7 @@ const Perfil = (props) => {
       });
   };
 
+  console.log("-> PERFIL: ", value)
   return (
     <ScrollView style={s.container}>
       <View style={s.containerCentrado}>

@@ -34,12 +34,12 @@ export default function Pass(props) {
       });
   };
   const avanzar = (valor) => {
-    console.log(change);
+    //console.log(change);
     if (valor == "Ninguno" && change == 0) {
       setChange(change + 1);
       saveNivel("Poco");
     }
-    console.log(change);
+    //console.log(change);
     if (valor == "Poco" && change == 0) {
       setChange(change + 1);
       saveNivel("Suficiente");

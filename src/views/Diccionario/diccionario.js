@@ -13,7 +13,7 @@ export default function Diccionario() {
   const [text, setText] = React.useState("");
 
   if (!isLoaded) {
-    console.log("ERROR AL CARGAR FONTS");
+    
     return (
       <View>
         <Text>ERROR AL CARGAR FONTS</Text>

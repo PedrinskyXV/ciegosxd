@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
 import { View, ScrollView, Button } from "react-native";
-import { Title, Text, TextInput } from "react-native-paper";
+import { Title, Text, TextInput, Caption } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { ToastContainer, toast } from "react-toastify";
@@ -62,13 +62,13 @@ export default function Phase2(props) {
         querySnapshot.forEach((doc) => {
           datos.push(doc.data().words.toUpperCase());
         });
-        console.log(datos);
+        //console.log(datos);
         setPost(getRandomInt(0, datos.length));
         setWord(datos);
       });
   }, []);
   if (!isLoaded) {
-    console.log("ERROR AL CARGAR FONTS");
+    
     return (
       <View>
         <Text>ERROR AL CARGAR FONTS</Text>
@@ -112,6 +112,9 @@ export default function Phase2(props) {
               },
             }}
           />
+        </View>
+        <View>
+          <Caption>{word[pos]}</Caption>
         </View>
         <View style={{ marginVertical: 20 }}>
           <TextInput

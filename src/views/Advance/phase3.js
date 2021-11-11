@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
 import { View, ScrollView, Button } from "react-native";
-import { Title, Text, TextInput } from "react-native-paper";
+import { Title, Text, TextInput, Caption } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { useLinkProps } from "@react-navigation/native";
@@ -65,13 +65,13 @@ export default function Phase3(props) {
         querySnapshot.forEach((doc) => {
           datos.push(doc.data().phrases.toUpperCase());
         });
-        console.log(datos);
+        //console.log(datos);
         setPost(getRandomInt(0, datos.length));
         setPhrase(datos);
       });
   }, []);
   if (!isLoaded) {
-    console.log("ERROR AL CARGAR FONTS");
+    
     return (
       <View>
         <Text>ERROR AL CARGAR FONTS</Text>
@@ -115,6 +115,9 @@ export default function Phase3(props) {
             value={text}
             onChangeText={(text) => setText(text.toUpperCase())}
           />
+        </View>
+        <View>
+          <Caption>{phrase[pos]}</Caption>
         </View>
         <View style={s.fixToText}>
           <Button

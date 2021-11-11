@@ -86,7 +86,7 @@ const AbcRoute = () => {
 
           <DataTable.Row>
             {vocales.map((v) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={v}>
                 <View>
                   <Text style={styles.abc}>{v}</Text>
                 </View>
@@ -100,7 +100,7 @@ const AbcRoute = () => {
 
           <DataTable.Row>
             {consonantes.map((c) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={c}>
                 <View>
                   <Text style={styles.abc}>{c}</Text>
                 </View>
@@ -110,7 +110,7 @@ const AbcRoute = () => {
 
           <DataTable.Row>
             {consonantes2.map((c) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={c}>
                 <View>
                   <Text style={styles.abc}>{c}</Text>
                 </View>
@@ -120,7 +120,7 @@ const AbcRoute = () => {
 
           <DataTable.Row>
             {consonantes3.map((c) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={c}>
                 <View>
                   <Text style={styles.abc}>{c}</Text>
                 </View>
@@ -130,7 +130,7 @@ const AbcRoute = () => {
 
           <DataTable.Row>
             {consonantes4.map((c) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={c}>
                 <View>
                   <Text style={styles.abc}>{c}</Text>
                 </View>
@@ -229,7 +229,7 @@ const NumbersRoute = () => {
 
           <DataTable.Row>
             {numeros.map((n) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={n}>
                 <View>
                   <Text style={styles.txt}>{n}</Text>
                 </View>
@@ -239,7 +239,7 @@ const NumbersRoute = () => {
 
           <DataTable.Row>
             {numeros.map((n) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={n}>
                 <View>
                   <Text style={styles.num}>{n}</Text>
                 </View>
@@ -249,7 +249,7 @@ const NumbersRoute = () => {
 
           <DataTable.Row>
             {numeros2.map((n) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={n}>
                 <View>
                   <Text style={styles.txt}>{n}</Text>
                 </View>
@@ -259,7 +259,7 @@ const NumbersRoute = () => {
 
           <DataTable.Row>
             {numeros2.map((n) => (
-              <DataTable.Cell>
+              <DataTable.Cell key={n}>
                 <View>
                   <Text style={styles.num}>{n}</Text>
                 </View>
@@ -371,8 +371,8 @@ const SymbolsRoute = () => {
           </DataTable.Header>
 
           <DataTable.Row style={{ backgroundColor: "#f3f3f3" }}>
-            {simbolos.map((s) => (
-              <DataTable.Cell style={styles.celda}>
+            {simbolos.map((s, i) => (
+              <DataTable.Cell style={styles.celda} key={i}>
                 <View>
                   <Text style={styles.txt}>{s}</Text>
                 </View>
@@ -380,8 +380,8 @@ const SymbolsRoute = () => {
             ))}
           </DataTable.Row>
           <DataTable.Row style={{ backgroundColor: "#ebebeb" }}>
-            {simbolos.map((s) => (
-              <DataTable.Cell style={styles.celda}>
+            {simbolos.map((s, i) => (
+              <DataTable.Cell style={styles.celda} key={i}>
                 <View>
                   <Text style={styles.sym}>{s}</Text>
                 </View>
@@ -390,8 +390,8 @@ const SymbolsRoute = () => {
           </DataTable.Row>
 
           <DataTable.Row style={{ backgroundColor: "#f3f3f3" }}>
-            {simbolos2.map((s) => (
-              <DataTable.Cell style={styles.celda}>
+            {simbolos2.map((s, i) => (
+              <DataTable.Cell style={styles.celda} key={i}>
                 <View>
                   <Text style={styles.txt}>{s}</Text>
                 </View>
@@ -400,8 +400,8 @@ const SymbolsRoute = () => {
           </DataTable.Row>
 
           <DataTable.Row style={{ backgroundColor: "#ebebeb" }}>
-            {simbolos2.map((s) => (
-              <DataTable.Cell style={styles.celda}>
+            {simbolos2.map((s, i) => (
+              <DataTable.Cell style={styles.celda} key={i}>
                 <View>
                   <Text style={styles.sym}>{s}</Text>
                 </View>
@@ -481,7 +481,7 @@ export default function Diccionario() {
   });
 
   if (!isLoaded) {
-    console.log("ERROR AL CARGAR FONTS");
+    
     return (
       <View>
         <Text>ERROR AL CARGAR FONT</Text>
@@ -520,7 +520,7 @@ const styles = StyleSheet.create({
   },
   num: {
     fontSize: 48,
-    fontFamily: "Braille-600",
+    fontFamily: "Braille-Bold",
     textTransform: "uppercase",
     fontWeight: "500",
   },

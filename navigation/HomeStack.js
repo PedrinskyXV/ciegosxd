@@ -39,13 +39,18 @@ export default function HomeStack() {
           if (nivel !== "") {
             setUser({ User: user.User, conNivel: true, Nivel: nivel });
           }
+          else{
+            setUser({ User: user.User, conNivel: false, Nivel: nivel });
+          }
         } else {
           console.log("No se encontro el nivel");
+          setUser({ User: user.User, conNivel: false, Nivel: nivel });
         }
         setIsLoading(false);
       })
       .catch((error) => {
         console.log("Error al obtener el documento: ", error);
+        setUser({ User: user.User, conNivel: false, Nivel: nivel });
         setIsLoading(false);
       });
   }, []);
