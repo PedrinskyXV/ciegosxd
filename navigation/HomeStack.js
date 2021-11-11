@@ -8,6 +8,7 @@ import DiccionarioScreen from "@views/Diccionario/diccionario";
 import RecursosScreen from "@views/Recursos/recursos";
 import PerfilScreen from "@views/Perfil/perfil";
 import PracticeScreen from "@views/Practice/practice";
+import Phase1Screen from "@views/Advance/phase1";
 import Phase2Screen from "@views/Advance/phase2";
 import Phase3Screen from "@views/Advance/phase3";
 
@@ -69,6 +70,11 @@ export default function HomeStack() {
           options={{ headerShown: false }}
         />
       )} */}
+      <Stack.Screen
+        name="Phase1"
+        component={Phase1Screen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Practice"
         component={PracticeScreen}
