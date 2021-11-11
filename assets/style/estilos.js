@@ -44,4 +44,8 @@ export default StyleSheet.create({
     fontWeight: "700",
     textTransform: "uppercase",
   },
+  fixToText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });

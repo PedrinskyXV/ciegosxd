@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { Title, Text, TextInput, Button, Chip } from "react-native-paper";
+import { View, ScrollView, Button } from "react-native";
+import { Title, Text, TextInput, Chip } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const db = Firebase.firestore();
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
+}
+function getRandomInt() {
+  return Math.floor(Math.random() * (3 - 1)) + 1;
 }
 const datos = [];
 const acertado = 0;
@@ -17,33 +22,62 @@ export default function Practice(props) {
     "Braille-Preview": require("@fonts/braille_preview.ttf"),
     "Braille-Esp": require("@fonts/braille_esp.ttf"),
   });
+  const [ej, setEj] = React.useState("");
+  const [phrase, setPhrase] = React.useState("");
   const [word, setWord] = React.useState("");
   const [text, setText] = React.useState("");
   //const datos = [];
   const [pos, setPost] = React.useState(0);
-  const [acer, setAcer] = React.useState(0);
+  //const [acer, setAcer] = React.useState(0);
   const [reali, setReali] = React.useState(0);
-  const [state, setState] = React.useState({
-
-    esCorrecto: false,
-
-    Mensaje: "",
-
-  });
+  const notify = (tipo) => {
+    if (tipo == "success") {
+      toast.success('Bien Hecho, respuesta correcta', {
+        theme: "dark",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+    else if(tipo == "warning"){
+      toast.error('La respuesta correcta es: '+word[pos], {
+        theme: "dark",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+    else if(tipo == "" || tipo == null){
+      toast.error('No ha ingresado datos', {
+        theme: "dark",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
+  }
   const verficarSiguiente = (valor) => {
     if (valor == word[pos]){
       setPost(getRandomInt(0,datos.length));
-      setState({
-        esCorrecto: false,
-        Mensaje: null,
-      });
+      notify("success");
       setText("");
-      setAcer(acer + 1);
-    } else {
-      setState({
-        esCorrecto: true,
-        Mensaje: "La palabra correcta es: "+word[pos],
-      });
+      //setAcer(acer + 1);
+    } else if(valor != word[pos] && valor != "" && valor != null){
+      notify("warning");
+    }else{
+      notify();
     }
     setReali(reali + 1);
   }
@@ -69,9 +103,20 @@ export default function Practice(props) {
   } else {
     return (
       <ScrollView style={s.container}>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <View>
           <Title style={{textAlign: "justify"}}>
-          Busca una palabra para ver su significado en braille a continuacion:
+          Practica tus conocimientos:
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -107,17 +152,10 @@ export default function Practice(props) {
             onChangeText={(text) => setText(text.toUpperCase())}
           />
         </View>
-        <Text>{word[pos]}</Text>
-        <Text>{acer}</Text>
-        <Text>{reali}</Text>
-        <View>
-          <Button onPress={() => verficarSiguiente(text)} >ORALE PUTO</Button>
+        <View style={s.fixToText}>
+          <Button title="Regresar" onPress={() => props.navigation.navigate("Home")} />
+          <Button title="Verificar" color="#0CBA41" onPress={() => verficarSiguiente(text)} />
         </View>
-        {state.esCorrecto ? (
-            <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>
-              {state.Mensaje}
-            </Chip>
-          ) : null}
       </ScrollView>
     );
   }

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { Title, Text, TextInput, Button, Chip } from "react-native-paper";
+import { View, ScrollView, Button, StyleSheet } from "react-native";
+import { Title, Text, TextInput, Chip } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
 import { useLinkProps } from "@react-navigation/native";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const db = Firebase.firestore();
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -13,7 +15,7 @@ const datos = [];
 const acertado = 0;
 const realizadas = 0;
 
-export default function Phase3() {
+export default function Phase3(props) {
   const [isLoaded] = useFonts({
     "Braille-Preview": require("@fonts/braille_preview.ttf"),
     "Braille-Esp": require("@fonts/braille_esp.ttf"),
@@ -24,13 +26,17 @@ export default function Phase3() {
   const [pos, setPost] = React.useState(0);
   const [acer, setAcer] = React.useState(0);
   const [reali, setReali] = React.useState(0);
-  const [state, setState] = React.useState({
-
-    esCorrecto: false,
-
-    Mensaje: "",
-
-  });
+  /* const notify = (tiempo, respuesta) => {
+    toast.success(respuesta, {
+      position: "top-center",
+      autoClose: tiempo,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+  } */
   const verficarSiguiente = (valor) => {
     if (valor == phrase[pos]){
       setPost(getRandomInt(0,datos.length));
@@ -40,12 +46,16 @@ export default function Phase3() {
       });
       setText("");
       setAcer(acer + 1);
-    } else {
-      //alert("la palabra correcta es : " + word[pos]);
+      setReali(reali + 1);
+    } else if(valor != phrase && valor !="" && valor != null){
+      setReali(reali + 1);
     }
-    setReali(reali + 1);
     if (reali == 5) {
+      if (acer == 5){
         props.navigation.navigate("Home");
+      }else{
+        props.navigation.navigate("Home");
+      }
     }
   }
   useEffect(() => {
@@ -72,11 +82,11 @@ export default function Phase3() {
       <ScrollView style={s.container}>
         <View>
           <Title style={{textAlign: "justify"}}>
-          Busca una palabra para ver su significado en braille a continuacion:
+          Prueba tus conocimientos!!!
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <Title>Traduzca la siguiente palabra</Title>
+          <Title>Traduzca la siguiente frase</Title>
           <TextInput
             multiline
             left={<TextInput.Icon name="braille" />}
@@ -108,17 +118,10 @@ export default function Phase3() {
             onChangeText={(text) => setText(text.toUpperCase())}
           />
         </View>
-        <Text>{phrase[pos]}</Text>
-        <Text>{acer}</Text>
-        <Text>{reali}</Text>
-        <View>
-          <Button onPress={() => verficarSiguiente(text)} >ORALE PUTO</Button>
+        <View style={s.fixToText}>
+          <Button title="Cancelar" onPress={() => props.navigation.navigate("Home")} />
+          <Button title="Verificar" color="#0CBA41" onPress={() => verficarSiguiente(text)} />
         </View>
-        {state.esCorrecto ? (
-            <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>
-              {state.Mensaje}
-            </Chip>
-          ) : null}
       </ScrollView>
     );
   }

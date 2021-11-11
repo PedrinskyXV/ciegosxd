@@ -15,6 +15,19 @@ import Firebase from "@database/firebase";
 import { AuthenticatedUserContext } from "@navigation/AuthenticatedUserProvider";
 
 const auth = Firebase.auth();
+const { user, setUser } = useContext(AuthenticatedUserContext);
+
+const nivel = () => {
+  if (user.Nivel == "Poco"){
+    navigation.navigate("Phase2")
+  }
+  if (user.Nivel == "Ninguna"){
+    navigation.navigate("Phase1")
+  }
+  if (user.Nivel == "Suficiente"){
+    navigation.navigate("Phase3")
+  }
+}
 
 export default function Home({ navigation }) {
   const handleSignOut = async () => {
@@ -67,12 +80,7 @@ export default function Home({ navigation }) {
       <View style={styles.row}>
         <TouchableOpacity
           style={styles.btn}
-          onPress={() =>
-            navigation.navigate("Home", {
-              nivel: "Nada",
-            })
-          }
-        >
+          onPress={() => nivel()}>
           <Avatar.Icon size={100} icon="ab-testing" color="#e84444" style={styles.opcLogo}/>
           <Text style={styles.opcTxt}>Desafio</Text>
         </TouchableOpacity>

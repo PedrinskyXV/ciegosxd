@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { useFonts } from "@use-expo/font";
-import { View, ScrollView, StyleSheet } from "react-native";
-import { Title, Text, TextInput, Button, Chip } from "react-native-paper";
+import { View, ScrollView, Button } from "react-native";
+import { Title, Text, TextInput, Chip } from "react-native-paper";
 import s from "@assets/style/estilos";
 import Firebase from "@database/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const db = Firebase.firestore();
 function getRandomLetter() {
-    var n = 0;
-    var letra = "";
-    n = Math.floor(Math.random() * (90 - 65)) + 65;
-    //Pasar n letra
-    letra = String.fromCharCode(n);
-   // console.log(letra);
+  var n = 0;
+  var letra = "";
+  n = Math.floor(Math.random() * (90 - 65)) + 65;
+  //Pasar n letra
+  letra = String.fromCharCode(n);
+  // console.log(letra);
   return letra;
 }
 const datos = [];
@@ -29,45 +31,55 @@ export default function Phase1(props) {
   //const [pos, setLetter] = React.useState(0);
   const [acer, setAcer] = React.useState(0);
   const [reali, setReali] = React.useState(0);
-  const [state, setState] = React.useState({
-
-    esCorrecto: false,
-
-    Mensaje: "",
-
-  });
-  const verficarSiguiente = (valor) => {
-    if (valor == letter){
-      setLetter(getRandomLetter());
-      setState({
-        esCorrecto: false,
-        Mensaje: null,
+  const notify = (tipo) => {
+    if (tipo == "resultado") {
+      toast.success("A", {
+        theme: "dark",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
+    } else {
+      toast.error("No ha ingresado datos", {
+        theme: "dark",
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+  const verficarSiguiente = (valor) => {
+    if (valor == letter) {
+      setLetter(getRandomLetter());
       setText("");
       setAcer(acer + 1);
       setReali(reali + 1);
-    } else if(valor != letter && valor !=""){
-      setState({
-        esCorrecto: true,
-        Mensaje: "La letra correcta es: "+letter,
-      });
+    } else if (valor != letter && valor != "" && valor != null) {
       setReali(reali + 1);
-    }
-
-    //AQUIIIIIIIIIIIIIIIIII HIDALGOOOOOOOOOOOOOOOOOOO AQUIIIIIIIIIIIIIIIIIIII
-
-    else if(valor == "" || valor == null){
-      alert('Campo vacio');
+    } else if (valor == "" || valor == null) {
+      notify();
     }
     if (reali == 5) {
-      props.navigation.navigate("Home");
-  }
-  }
+      if (acer == 5) {
+        props.navigation.navigate("Pass");
+      } else {
+        props.navigation.navigate("noPass");
+      }
+    }
+  };
 
   useEffect(() => {
-        setLetter(getRandomLetter());
-        //setLetter(letter);
-      }, []);
+    setLetter(getRandomLetter());
+    //setLetter(letter);
+  }, []);
   if (!isLoaded) {
     console.log("ERROR AL CARGAR FONTS");
     return (
@@ -79,9 +91,20 @@ export default function Phase1(props) {
     //setLetter(getRandomLetter());
     return (
       <ScrollView style={s.container}>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <View>
-          <Title style={{textAlign: "justify"}}>
-          Busca una letra para ver su significado en braille a continuacion:
+          <Title style={{ textAlign: "justify" }}>
+            Prueba tus conocimientos!!
           </Title>
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -90,20 +113,18 @@ export default function Phase1(props) {
             multiline
             left={<TextInput.Icon name="braille" />}
             mode="flat"
-            style={{fontSize: 38}}            
+            style={{ fontSize: 38 }}
             value={letter}
-            editable="false"            
+            editable="false"
             numberOfLines="1"
-            theme={
-              {
-                fonts: {
-                  regular: {
-                    fontFamily: 'Braille-Esp',
-                    fontSize: 16
-                  }
-                }
-              }
-            }
+            theme={{
+              fonts: {
+                regular: {
+                  fontFamily: "Braille-Esp",
+                  fontSize: 16,
+                },
+              },
+            }}
           />
         </View>
         <View style={{ marginVertical: 20 }}>
@@ -115,18 +136,18 @@ export default function Phase1(props) {
             value={text}
             onChangeText={(text) => setText(text.toUpperCase())}
           />
+          <View style={s.fixToText}>
+            <Button
+              title="Cancelar"
+              onPress={() => props.navigation.navigate("Home")}
+            />
+            <Button
+              title="Verificar"
+              color="#0CBA41"
+              onPress={() => verficarSiguiente(text)}
+            />
+          </View>
         </View>
-        <Text>{letter}</Text>
-        <Text>{acer}</Text>
-        <Text>{reali}</Text>
-        <View>
-          <Button onPress={() => verficarSiguiente(text)} >ORALE PUTO</Button>
-        </View>
-        {state.esCorrecto ? (
-            <Chip icon="alert-circle" style={s.bannerAlert} textStyle={s.bannerMsj}>
-              {state.Mensaje}
-            </Chip>
-          ) : null}
       </ScrollView>
     );
   }
